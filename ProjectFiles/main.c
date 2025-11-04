@@ -16,19 +16,36 @@ void led_task()
     gpio_set_dir(LED_PIN, GPIO_OUT);
     while (true) {
         gpio_put(LED_PIN, 1);
-        vTaskDelay(500);
+        vTaskDelay(250);
         gpio_put(LED_PIN, 0);
-        vTaskDelay(5001);
+        vTaskDelay(250);
     }
 }
 
 
 void adc_read_task()
 {
+
+     // Make sure GPIO is high-impedance, no pullups etc
+    adc_gpio_init(26);
+    adc_gpio_init(27);
+    adc_gpio_init(28);
+    // Select ADC input 0 (GPIO26)
+    
     while (true){
 
-        printf("Hello World\r\n");
-        vTaskDelay(500);
+        adc_select_input(0);
+        int adc_x = adc_read();
+
+        adc_select_input(1);
+        int adc_y = adc_read();
+
+        adc_select_input(2);
+        int adc_z = adc_read();
+
+
+        printf("V %d,%d,%d\r\n",adc_x,adc_y,adc_z);
+        vTaskDelay(100);
 
     }
 }
