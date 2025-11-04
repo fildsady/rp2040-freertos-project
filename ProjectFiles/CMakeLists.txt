@@ -1,6 +1,15 @@
-add_executable(blink
+add_executable(adc
         main.c
 )
 
-target_link_libraries(blink pico_stdlib freertos)
-pico_add_extra_outputs(blink)
+pico_enable_stdio_uart(adc ENABLE)
+pico_enable_stdio_usb(adc DISABLE)
+
+target_link_libraries(adc pico_stdlib
+
+hardware_adc
+freertos
+
+
+)
+pico_add_extra_outputs(adc)
